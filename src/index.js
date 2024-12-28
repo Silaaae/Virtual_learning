@@ -1,21 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+// src/index.js
+import React, { useMemo } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './App';
-import { GlobalProvider } from './context/GlobalState';
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
+import { GlobalProvider, useGlobalState } from './context/GlobalState';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import getTheme from './theme';
+import './styles/global.css'; // Ensure this file exists or adjust as needed
 
+function Root() {
+  return (
+    <React.StrictMode>
+      <GlobalProvider>
+        <Router>
+          <ThemedApp />
+        </Router>
+      </GlobalProvider>
+    </React.StrictMode>
+  );
+}
 
-ReactDOM.render(
-  <GlobalProvider>
-    <BrowserRouter>
+function ThemedApp() {
+  const { darkMode } = useGlobalState();
+
+  const theme = useMemo(() => getTheme(darkMode ? 'dark' : 'light'), [darkMode]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
-    </BrowserRouter>
-  </GlobalProvider>,
-  document.getElementById('root')
-);
+    </ThemeProvider>
+  );
+}
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<Root />);

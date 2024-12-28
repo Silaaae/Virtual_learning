@@ -1,31 +1,35 @@
-import React, { createContext, useReducer } from 'react';
+// src/context/GlobalState.js
+import React, { createContext, useReducer, useContext } from 'react';
 
-const GlobalStateContext = createContext();
-const GlobalDispatchContext = createContext();
-
+// Initial State
 const initialState = {
   user: null,
-  courses: [],
-  quizProgress: {},
+  darkMode: false, // Added darkMode state
 };
 
-function reducer(state, action) {
+// Create Contexts
+const GlobalStateContext = createContext(initialState);
+const GlobalDispatchContext = createContext(null);
+
+// Reducer
+const globalReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
       return { ...state, user: action.payload };
     case 'LOGOUT':
       return { ...state, user: null };
-    case 'SET_COURSES':
-      return { ...state, courses: action.payload };
-    case 'UPDATE_QUIZ_PROGRESS':
-      return { ...state, quizProgress: action.payload };
+    case 'TOGGLE_DARK_MODE':
+      return { ...state, darkMode: !state.darkMode };
+    case 'UPDATE_PROFILE':
+      return { ...state, user: { ...state.user, ...action.payload } };
     default:
       return state;
   }
-}
+};
 
+// Provider
 export const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(globalReducer, initialState);
 
   return (
     <GlobalStateContext.Provider value={state}>
@@ -36,5 +40,6 @@ export const GlobalProvider = ({ children }) => {
   );
 };
 
-export const useGlobalState = () => React.useContext(GlobalStateContext);
-export const useGlobalDispatch = () => React.useContext(GlobalDispatchContext);
+// Custom Hooks
+export const useGlobalState = () => useContext(GlobalStateContext);
+export const useGlobalDispatch = () => useContext(GlobalDispatchContext);
