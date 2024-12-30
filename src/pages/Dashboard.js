@@ -19,12 +19,12 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-// Register Chart.js components
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function Dashboard() {
   // State for user name
-  const [userName, setUserName] = useState('Loading...'); // Placeholder name while fetching
+  const [userName, setUserName] = useState('Dear'); // Placeholder name while fetching
 
   // Mock stats data
   const stats = [
@@ -52,18 +52,9 @@ function Dashboard() {
     },
   };
 
-  // Simulate fetching user data from the backend
-  useEffect(() => {
-    const fetchUserName = async () => {
-      // Simulate a delay to mimic backend API call
-      setTimeout(() => {
-        setUserName('John Doe'); // Replace with fetched data later
-      }, 1000); // 1-second delay
-    };
 
-    fetchUserName();
-  }, []);
-
+ 
+  
   return (
     <>
     <Navbar/>
