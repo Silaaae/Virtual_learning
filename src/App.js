@@ -1,7 +1,6 @@
 // src/App.js
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import { CircularProgress, Container } from '@mui/material';
@@ -9,6 +8,8 @@ import { CircularProgress, Container } from '@mui/material';
 // Lazy load components for performance
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const SignupPage = lazy(() => import('./pages/SignupPage'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const QuizPage = lazy(() => import('./pages/QuizPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
@@ -16,12 +17,12 @@ const Settings = lazy(() => import('./pages/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AdvancedJavaScript = lazy(() => import('./pages/AdvancedJavaScript'));
 const ReactCourse = lazy(() => import('./pages/ReactCourse'));
+const HelpPage = lazy(() => import('./pages/HelpPage'));
 // Add more course pages as needed
 
 function App() {
   return (
     <ErrorBoundary>
-      <Navbar />
       <Suspense
         fallback={
           <Container sx={{ mt: 10, textAlign: 'center' }}>
@@ -32,6 +33,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/login" element={<LoginPage />} /> {/* Ajout de la route pour Login */}
+          <Route path="/signup" element={<SignupPage />} /> {/* Ajout de la route pour Signup */}
           <Route
             path="/dashboard"
             element={
@@ -79,6 +82,16 @@ function App() {
               <PrivateRoute>
                 <ReactCourse />
               </PrivateRoute>
+            }
+          />
+
+          {/* Ajout de la route pour HelpPage */}
+          <Route
+            path="/help"
+            element={
+              <Suspense fallback={<CircularProgress />}>
+                <HelpPage />
+              </Suspense>
             }
           />
           {/* Add more course routes as needed */}

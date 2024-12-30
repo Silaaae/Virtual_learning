@@ -1,4 +1,3 @@
-// src/pages/ProfilePage.js
 import React, { useState } from 'react';
 import {
   Container,
@@ -30,12 +29,10 @@ function ProfilePage() {
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Convert the image to a data URL for preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePic(reader.result);
         setPreview(reader.result);
-        // Update the global state if needed
         dispatch({
           type: 'UPDATE_PROFILE',
           payload: { profilePic: reader.result },
@@ -51,33 +48,51 @@ function ProfilePage() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        >
-          <Box display="flex" flexDirection="column" alignItems="center">
+    <Container maxWidth="md" sx={{ mt: 5 }}>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 5,
+          borderRadius: 3,
+          background: 'linear-gradient(135deg, #f5f5f5, #e3e3e3)',
+        }}
+      >
+        <Box display="flex" flexDirection="column" alignItems="center">
+          {/* Profile Picture Section */}
+          <motion.div
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
+          >
             <Avatar
               src={preview}
-              sx={{ width: 100, height: 100, mb: 2 }}
+              sx={{
+                width: 120,
+                height: 120,
+                mb: 2,
+                boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
+              }}
             />
-            <label htmlFor="profile-pic-upload">
-              <Input
-                accept="image/*"
-                id="profile-pic-upload"
-                type="file"
-                onChange={handleProfilePicChange}
-              />
-              <Button variant="contained" component="span">
-                Upload Profile Picture
-              </Button>
-            </label>
-          </Box>
-        </motion.div>
+          </motion.div>
+          <label htmlFor="profile-pic-upload">
+            <Input
+              accept="image/*"
+              id="profile-pic-upload"
+              type="file"
+              onChange={handleProfilePicChange}
+            />
+            <Button variant="outlined" component="span" sx={{ mt: 1 }}>
+              Upload New Picture
+            </Button>
+          </label>
+        </Box>
+
+        {/* Profile Details Section */}
         <Box mt={4}>
-          <Grid container spacing={2}>
+          <Typography variant="h5" align="center" sx={{ mb: 3, fontWeight: 'bold' }}>
+            Edit Your Profile
+          </Typography>
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
                 label="Name"
@@ -85,6 +100,7 @@ function ProfilePage() {
                 fullWidth
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                sx={{ backgroundColor: '#fff', borderRadius: 1 }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,15 +110,29 @@ function ProfilePage() {
                 fullWidth
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                sx={{ backgroundColor: '#fff', borderRadius: 1 }}
               />
             </Grid>
-            {/* Add more fields as needed */}
           </Grid>
-          <Box mt={4} textAlign="center">
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Save Changes
-            </Button>
-          </Box>
+        </Box>
+
+        {/* Save Changes Button */}
+        <Box mt={5} textAlign="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+            sx={{
+              px: 5,
+              py: 1.5,
+              fontSize: '1rem',
+              borderRadius: 2,
+              backgroundColor: '#4caf50',
+              '&:hover': { backgroundColor: '#388e3c' },
+            }}
+          >
+            Save Changes
+          </Button>
         </Box>
       </Paper>
     </Container>
@@ -110,4 +140,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-

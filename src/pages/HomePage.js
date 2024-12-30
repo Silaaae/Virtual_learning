@@ -21,30 +21,31 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
-
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer'; 
 function HomePage() {
   // Sample courses data
   const courses = [
     {
       title: 'Introduction to React',
       description: 'Learn the basics of React, including components, state, and props.',
-      image: 'https://source.unsplash.com/random/400x200?react',
+      image: 'https://via.placeholder.com/400x200?text=React+Course', // Replace this with a valid URL
       link: '/courses/react',
     },
     {
       title: 'Advanced JavaScript',
       description: 'Deep dive into JavaScript ES6+, asynchronous programming, and more.',
-      image: 'https://source.unsplash.com/random/400x200?javascript',
+      image: 'https://via.placeholder.com/400x200?text=JavaScript+Course', // Replace this with a valid URL
       link: '/courses/javascript',
     },
     {
       title: 'Web Design Principles',
       description: 'Understand the fundamentals of web design, UX/UI, and responsive layouts.',
-      image: 'https://source.unsplash.com/random/400x200?web-design',
+      image: 'https://via.placeholder.com/400x200?text=Web+Design+Course', // Replace this with a valid URL
       link: '/courses/web-design',
     },
-    // Add more courses as needed
   ];
+  
 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -136,6 +137,8 @@ function HomePage() {
   };
 
   return (
+    <>
+      <Navbar />
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       {/* Welcome Section */}
       <Box textAlign="center" mb={6}>
@@ -290,6 +293,8 @@ function HomePage() {
         </Box>
       </Box>
     </Container>
+    <Footer /> 
+    </>
   );
 }
 

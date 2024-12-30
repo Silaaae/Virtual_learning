@@ -44,10 +44,20 @@ function Navbar() {
         >
           Virtual Learning Hub
         </Typography>
+        {/* Nouveau bouton pour la page Aide */}
+        <Button color="inherit" component={RouterLink} to="/help">
+          Help
+        </Button>
+
         {!user && (
-          <Button color="inherit" component={RouterLink} to="/auth">
-            Login/Signup
-          </Button>
+          <>
+            <Button color="inherit" component={RouterLink} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={RouterLink} to="/signup">
+              Signup
+            </Button>
+          </>
         )}
         {user && (
           <>
